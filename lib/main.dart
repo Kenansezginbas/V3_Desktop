@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'V3 Desktopp',
+      title: 'V3 Desktop',
       home: HomePage(),
     );
   }
