@@ -1,4 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:v3_desktop/service/get_items.dart';
+import 'package:v3_desktop/service/get_token.dart';
+import 'package:v3_desktop/utils/service_urls.dart';
 import 'package:v3_desktop/widgets/custom_outlined_button.dart';
 
 class HomePage extends StatefulWidget {
@@ -9,6 +14,21 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  var spUrl = ServiceUrls().spUrl;
+  var token;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    GetToken().getToken();
+  }
+
+  Future<void> tokenControllerShared() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    token = (await prefs.getString("token"))!;
+    spUrl = spUrl + token + "?";
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,6 +53,18 @@ class _HomePageState extends State<HomePage> {
               buttonText: "Ödeme Al",
               iconData: Icons.attach_money,
               color: Colors.green,
+            ),
+            CustomOutlinedButton(
+              onPressed: GetItems().runSp,
+              buttonText: "Ürün Durum Raporu",
+              iconData: Icons.inventory,
+              color: Colors.pink,
+            ),
+            CustomOutlinedButton(
+              onPressed: () => Get.toNamed("/itemDetailPage"),
+              buttonText: "Ürün Durum Raporu",
+              iconData: Icons.inventory,
+              color: Colors.pink,
             ),
           ],
         ),

@@ -1,3 +1,5 @@
+//perakende müşteri modeli
+
 class RetailCustomerModel {
   int? modelType;
   String? currAccCode;
