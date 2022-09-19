@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:v3_desktop/models/item_detail.dart';
+import 'package:v3_desktop/models/item_detail_model.dart';
 import 'package:v3_desktop/service/get_items.dart';
 import 'package:v3_desktop/service/get_token.dart';
 import 'package:v3_desktop/utils/service_urls.dart';
@@ -20,16 +20,15 @@ class _ItemDetailPageState extends State<ItemDetailPage> {
     // TODO: implement initState
     super.initState();
     GetToken().getToken();
-    ;
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: FutureBuilder<ItemDetail>(
+      body: FutureBuilder<ItemDetailModel>(
         future:
             GetItems().runSp(), // a previously-obtained Future<String> or null
-        builder: (BuildContext context, AsyncSnapshot<ItemDetail> snapshot) {
+        builder: (BuildContext context, AsyncSnapshot<ItemDetailModel> snapshot) {
           List<Widget> children;
           if (snapshot.hasData) {
             children = <Widget>[

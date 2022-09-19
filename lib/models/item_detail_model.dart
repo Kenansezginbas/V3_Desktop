@@ -1,4 +1,4 @@
-class ItemDetail {
+class ItemDetailModel {
   String? itemCode;
   String? itemName;
   String? currencyCode;
@@ -32,7 +32,7 @@ class ItemDetail {
   int? price2;
   String? itemPhotoPath;
 
-  ItemDetail(
+  ItemDetailModel(
       {this.itemCode,
       this.itemName,
       this.currencyCode,
@@ -66,7 +66,7 @@ class ItemDetail {
       this.price2,
       this.itemPhotoPath});
 
-  ItemDetail.fromJson(Map<String, dynamic> json) {
+  ItemDetailModel.fromJson(Map<String, dynamic> json) {
     itemCode = json['ItemCode'];
     itemName = json['ItemName'];
     currencyCode = json['CurrencyCode'];
