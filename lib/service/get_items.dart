@@ -10,22 +10,26 @@ class GetItems {
   var dio = Dio();
   var url = ServiceUrls().spUrl;
   var spData = ProcModel(procName: "usp_GetProductPriceAndInventory");
-  runSp() async {
+  Future<List<ItemDetailModel>> runSp() async {
     var result, data;
     GetToken().getToken();
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var token = (await prefs.getString("token"))!;
     url = url + token + "?";
-    print(url);
+    // print(url);
     try {
       result = await dio.post(url, data: spData);
+      print("sfsf");
       print(result.statusCode);
-      print(result.data);
+      print(result.data[0]["ItemName"]);
+      // print(result.statusCode);
+      //print(result.data);
       data = await ItemDetailModel.fromJson(result.data);
-      print(result.statusCode);
+      // print("Status Code" + result);
+      // print(data[0].itemName);
     } catch (e) {
-      print(e.toString());
+      // print(e.toString());
     }
-   // return data;
+    return result.map(((e) => ItemDetailModel.fromJson(e))).toList();
   }
 }

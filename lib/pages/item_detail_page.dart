@@ -15,20 +15,23 @@ class ItemDetailPage extends StatefulWidget {
 class _ItemDetailPageState extends State<ItemDetailPage> {
   var spUrl = ServiceUrls().spUrl;
   var token;
+  var data;
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     GetToken().getToken();
+    data = GetItems().runSp();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: FutureBuilder<ItemDetailModel>(
+      body: FutureBuilder<List<ItemDetailModel>>(
         future:
             GetItems().runSp(), // a previously-obtained Future<String> or null
-        builder: (BuildContext context, AsyncSnapshot<ItemDetailModel> snapshot) {
+        builder: (BuildContext context,
+            AsyncSnapshot<List<ItemDetailModel>> snapshot) {
           List<Widget> children;
           if (snapshot.hasData) {
             children = <Widget>[
@@ -39,7 +42,7 @@ class _ItemDetailPageState extends State<ItemDetailPage> {
               ),
               Padding(
                 padding: const EdgeInsets.only(top: 16),
-                child: Text('Result: ${snapshot.data!.itemName}'),
+                child: Text('Result: ${snapshot.data![0].itemName}'),
               ),
             ];
           } else if (snapshot.hasError) {

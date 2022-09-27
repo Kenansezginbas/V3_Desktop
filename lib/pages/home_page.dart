@@ -16,11 +16,13 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   var spUrl = ServiceUrls().spUrl;
   var token;
+  var data;
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     GetToken().getToken();
+    //data = GetItems().runSp();
   }
 
   Future<void> tokenControllerShared() async {
@@ -49,7 +51,7 @@ class _HomePageState extends State<HomePage> {
               color: Colors.orange,
             ),
             CustomOutlinedButton(
-              onPressed: () {},
+              onPressed: () => print(data),
               buttonText: "Ödeme Al",
               iconData: Icons.attach_money,
               color: Colors.green,
