@@ -10,7 +10,7 @@ class GetItems {
   var dio = Dio();
   var url = ServiceUrls().spUrl;
   var spData = ProcModel(procName: "usp_GetProductPriceAndInventory");
-  Future<List<ItemDetailModel>> runSp() async {
+  Future<ItemDetailModel> runSp() async {
     var result, data;
     GetToken().getToken();
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -24,12 +24,29 @@ class GetItems {
       print(result.data[0]["ItemName"]);
       // print(result.statusCode);
       //print(result.data);
-      data = await ItemDetailModel.fromJson(result.data);
+      data = jsonDecode(result.data);
       // print("Status Code" + result);
       // print(data[0].itemName);
     } catch (e) {
       // print(e.toString());
     }
-    return result.map(((e) => ItemDetailModel.fromJson(e))).toList();
+    // return data.map(((e) => ItemDetailModel.fromJson(e))).toList();
+    return ItemDetailModel.fromJson(jsonDecode(result.data));
+  }
+
+ Future<ItemDetailModel> getItem() async {
+    var result, data;
+    GetToken().getToken();
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var token = (await prefs.getString("token"))!;
+    url = url + token + "?";
+    Response response = await dio.post(url, data: spData);
+    if (response.statusCode == 200) {
+      print(response.data);
+      //final result = jsonDecode(response.data);
+      return response.data.map(((e) => ItemDetailModel.fromJson(e))).toList();
+    } else {
+      throw Exception("ada");
+    }
   }
 }

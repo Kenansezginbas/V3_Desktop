@@ -21,17 +21,17 @@ class _ItemDetailPageState extends State<ItemDetailPage> {
     // TODO: implement initState
     super.initState();
     GetToken().getToken();
-    data = GetItems().runSp();
+    // data = GetItems().runSp();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: FutureBuilder<List<ItemDetailModel>>(
-        future:
-            GetItems().runSp(), // a previously-obtained Future<String> or null
-        builder: (BuildContext context,
-            AsyncSnapshot<List<ItemDetailModel>> snapshot) {
+      body: FutureBuilder<ItemDetailModel>(
+        future: GetItems()
+            .getItem(), // a previously-obtained Future<String> or null
+        builder:
+            (BuildContext context, AsyncSnapshot<ItemDetailModel> snapshot) {
           List<Widget> children;
           if (snapshot.hasData) {
             children = <Widget>[
@@ -42,7 +42,7 @@ class _ItemDetailPageState extends State<ItemDetailPage> {
               ),
               Padding(
                 padding: const EdgeInsets.only(top: 16),
-                child: Text('Result: ${snapshot.data![0].itemName}'),
+                child: Text('Result: ${snapshot.data!.itemCode}'),
               ),
             ];
           } else if (snapshot.hasError) {

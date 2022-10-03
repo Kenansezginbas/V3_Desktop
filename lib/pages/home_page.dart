@@ -51,13 +51,13 @@ class _HomePageState extends State<HomePage> {
               color: Colors.orange,
             ),
             CustomOutlinedButton(
-              onPressed: () => print(data),
+              onPressed: GetItems().getItem,
               buttonText: "Ödeme Al",
               iconData: Icons.attach_money,
               color: Colors.green,
             ),
             CustomOutlinedButton(
-              onPressed: GetItems().runSp,
+              onPressed: GetItems().getItem,
               buttonText: "Ürün Durum Raporu",
               iconData: Icons.inventory,
               color: Colors.pink,

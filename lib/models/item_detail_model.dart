@@ -28,8 +28,8 @@ class ItemDetailModel {
   String? brandDesc;
   int? qty;
   int? vat;
-  int? price1;
-  int? price2;
+  double? price1;
+  double? price2;
   String? itemPhotoPath;
 
   ItemDetailModel(
