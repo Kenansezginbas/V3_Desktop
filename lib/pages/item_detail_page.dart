@@ -16,56 +16,25 @@ class _ItemDetailPageState extends State<ItemDetailPage> {
   var spUrl = ServiceUrls().spUrl;
   var token;
   var data;
+  List<ItemDetailModel> _itemList = [];
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     GetToken().getToken();
     // data = GetItems().runSp();
+    GetItems()
+        .getItem()
+        .then((value) => {_itemList.add(value!), print(value.toString())});
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: FutureBuilder<ItemDetailModel>(
-        future: GetItems()
-            .getItem(), // a previously-obtained Future<String> or null
-        builder:
-            (BuildContext context, AsyncSnapshot<ItemDetailModel> snapshot) {
-          List<Widget> children;
-          if (snapshot.hasData) {
-            children = <Widget>[
-              const Icon(
-                Icons.check_circle_outline,
-                color: Colors.green,
-                size: 60,
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 16),
-                child: Text('Result: ${snapshot.data!.itemCode}'),
-              ),
-            ];
-          } else if (snapshot.hasError) {
-            children = <Widget>[
-              const Icon(
-                Icons.error_outline,
-                color: Colors.red,
-                size: 60,
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 16),
-                child: Text('Error: ${snapshot.error}'),
-              ),
-            ];
-          } else {
-            return customSpinKit();
-          }
-          return Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: children,
-            ),
-          );
+      body: ListView.builder(
+        itemCount: 2,
+        itemBuilder: (context, index) {
+          return Text("data");
         },
       ),
     );

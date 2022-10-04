@@ -34,19 +34,45 @@ class GetItems {
     return ItemDetailModel.fromJson(jsonDecode(result.data));
   }
 
- Future<ItemDetailModel> getItem() async {
+  Future<ItemDetailModel?> getItem() async {
+    var result, data;
+    GetToken().getToken();
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var token = (await prefs.getString("token"))!;
+    url = url + token + "?";
+    var res = await dio.post(url, data: spData);
+    if (res.statusCode == 200) {
+      var jsonBody = ItemDetailModel.fromJson(jsonDecode(res.data));
+      return jsonBody;
+    } else {
+      print("İstek başarısız oldu => ${res.statusCode}");
+    }
+  }
+}
+
+
+/*
+  Future<List<ItemDetailModel>> getItem() async {
     var result, data;
     GetToken().getToken();
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var token = (await prefs.getString("token"))!;
     url = url + token + "?";
     Response response = await dio.post(url, data: spData);
+    Iterable jsonBody = response.data;
     if (response.statusCode == 200) {
       print(response.data);
       //final result = jsonDecode(response.data);
-      return response.data.map(((e) => ItemDetailModel.fromJson(e))).toList();
+      return List<ItemDetailModel>.from(
+          jsonBody.map((e) => ItemDetailModel.fromJson(e)));
     } else {
       throw Exception("ada");
     }
-  }
-}
+  } */
+
+/*
+
+Iterable jsonBody = jsonDecode(response.body);
+return List<ItemDetailModel>.from(
+jsonBody.map((e) => ItemDetailModel.fromJson(e)));
+*/
